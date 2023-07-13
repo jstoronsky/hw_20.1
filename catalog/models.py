@@ -8,7 +8,7 @@ class Product(models.Model):
     product_name = models.CharField(max_length=100, verbose_name='наименование товара')
     description = models.TextField(verbose_name='описание товара')
     product_image = models.ImageField(upload_to='products/', verbose_name='изображение продукта', **NULLABLE)
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name='айди категории')
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name='Категория')
     price = models.IntegerField(verbose_name='цена товара')
     date_when_added = models.DateField(auto_now=False, auto_now_add=False,
                                        verbose_name='дата добавления товара на сайт')
@@ -21,7 +21,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
-        ordering = ('product_name', )
+        ordering = ('id', )
 
 
 class Category(models.Model):
@@ -34,4 +34,4 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
-        ordering = ('category_name', )
+        ordering = ('id', )

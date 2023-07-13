@@ -1,5 +1,10 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 # Create your views here.
+
+
+def show_admin(request):
+    return HttpResponseRedirect('http://127.0.0.1:8000/admin')
 
 
 def show_home_page(request):
