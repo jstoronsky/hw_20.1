@@ -35,3 +35,21 @@ class Category(models.Model):
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
         ordering = ('id', )
+        constraints = [
+            models.UniqueConstraint(fields=['id'], name='unique category')
+        ]
+
+
+class Contacts(models.Model):
+    company_name = models.CharField(max_length=50, verbose_name='название компании')
+    description = models.TextField(verbose_name='описание')
+    address = models.CharField(max_length=150, verbose_name='адрес')
+    email = models.EmailField(max_length=100, verbose_name='e-mail')
+    number = models.CharField(max_length=50, verbose_name='контактный номер')
+
+    def __str__(self):
+        return self.company_name
+
+    class Meta:
+        verbose_name = 'контакты'
+        verbose_name_plural = 'контакты'
