@@ -1,0 +1,48 @@
+{% extends 'main/base_sidebar.html' %}
+{% load my_tags %}
+{% block content_2 %}
+<header>
+  <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+    <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+      <span class="fs-4"></span>
+    </a>
+    <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+      <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#"></a>
+      <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#"></a>
+      <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#"></a>
+      <a class="py-2 link-body-emphasis text-decoration-none" href="#"></a>
+    </nav>
+  </div>
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-left">
+    <h1 class="display-4 fw-normal text-body-emphasis"><small>{{object_list.0}}</small></h1>
+  </div>
+</header>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title"></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li style="font-size:130%; font-family:tahoma">{{object_list.0.description}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card mb-4 rounded-3 shadow-sm" style="width:50%">
+          <img src="{% mediapath object_list.0.product_image %}" class="card-img-top">
+<!--           src="{{ object_list.0.product_image|mediapath }}" class="card-img-top">-->
+      </div>
+    </div>
+    <div class="col">
+    </div>
+  </div>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-2" style="text-align:left"><h2 class="card-title pricing-card-title">{{object_list.0.price}}<small class="text-body-secondary fw-light"> р.</small></h2></div>
+      <div class="col-2" style="text-align:left"><button type="button" class="w-95 btn btn-lg btn-outline-primary">Купить</button></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
