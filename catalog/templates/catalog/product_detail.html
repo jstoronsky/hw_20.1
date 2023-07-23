@@ -1,4 +1,4 @@
-{% extends 'main/base_sidebar.html' %}
+{% extends 'catalog/base_sidebar.html' %}
 {% load my_tags %}
 {% block content_2 %}
 <header>
@@ -14,7 +14,7 @@
     </nav>
   </div>
   <div class="pricing-header p-3 pb-md-4 mx-auto text-left">
-    <h1 class="display-4 fw-normal text-body-emphasis"><small>{{object_list.0}}</small></h1>
+    <h1 class="display-4 fw-normal text-body-emphasis"><small>{{object}}</small></h1>
   </div>
 </header>
 <div class="container">
@@ -24,14 +24,14 @@
         <div class="card-body">
           <h1 class="card-title pricing-card-title"></h1>
           <ul class="list-unstyled mt-3 mb-4">
-            <li style="font-size:130%; font-family:tahoma">{{object_list.0.description}}</li>
+            <li style="font-size:130%; font-family:tahoma">{{object.description}}</li>
           </ul>
         </div>
       </div>
     </div>
     <div class="col-4">
       <div class="card mb-4 rounded-3 shadow-sm" style="width:50%">
-          <img src="{% mediapath object_list.0.product_image %}" class="card-img-top">
+          <img src="{% mediapath object.product_image %}" class="card-img-top">
 <!--           src="{{ object_list.0.product_image|mediapath }}" class="card-img-top">-->
       </div>
     </div>
@@ -40,8 +40,10 @@
   </div>
   <div class="container text-center">
     <div class="row">
-      <div class="col-2" style="text-align:left"><h2 class="card-title pricing-card-title">{{object_list.0.price}}<small class="text-body-secondary fw-light"> р.</small></h2></div>
+      <div class="col-2" style="text-align:left"><h2 class="card-title pricing-card-title">{{object.price}}<small class="text-body-secondary fw-light"> р.</small></h2></div>
       <div class="col-2" style="text-align:left"><button type="button" class="w-95 btn btn-lg btn-outline-primary">Купить</button></div>
+      <div class="col-2" style="text-align:left">
+        <a href="{% url 'catalog:update' object.pk %}"><button type="button" class="w-95 btn btn-lg btn-outline-primary">Редактировать</button></a></div>
     </div>
   </div>
 </div>

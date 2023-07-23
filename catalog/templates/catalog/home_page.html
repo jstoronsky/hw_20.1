@@ -1,4 +1,4 @@
-{% extends 'main/base_sidebar.html' %}
+{% extends 'catalog/base_sidebar.html' %}
 {% block content_2 %}
 <header>
   <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
@@ -12,6 +12,7 @@
       <a class="py-2 link-body-emphasis text-decoration-none" href="#"></a>
     </nav>
   </div>
+  <a href="{% url 'catalog:create' %}"><button type="submit" class="btn btn-sm btn-outline-secondary">Добавить товар</button></a>
   <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
     <h1 class="display-4 fw-normal text-body-emphasis">Главная</h1>
     <p class="fs-5 text-body-secondary">Вы находитесь на сайте, предназначенном для продажи товаров</p>
@@ -31,6 +32,8 @@
             <li>{{product.description}}</li>
           </ul>
           <button type="button" class="w-100 btn btn-lg btn-outline-primary">Купить</button>
+          <a href="{% url 'catalog:product' product.pk %}"><button type="button" class="btn btn-sm">Детально</button></a>
+          <a href="{% url 'catalog:update' product.pk %}"><button type="button" class="btn btn-sm">Редактировать</button></a>
         </div>
       </div>
     </div>

@@ -1,19 +1,27 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
+
 from catalog.models import Product, Contacts, Category
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 
 
 # Create your views here.
-def show_home_page(request):
-    products = Product.objects.all()
-    categories = Category.objects.all()
-    to_html_dict = {'object_list': products,
-                    'categories': categories}
-    # for index in range(len(products)):
-    #     to_html_dict[f'product{index + 1}'] = products[index]
-    #     to_html_dict[f'price{index + 1}'] = products[index].price
-    #     to_html_dict[f'desc{index + 1}'] = products[index].description
-    print(products)
-    return render(request, 'main/home_page.html', to_html_dict)
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('product_name', 'description', 'category', 'price', 'date_when_added', 'date_when_changed')
+    success_url = reverse_lazy('catalog:')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ('product_name', 'description', 'price', 'date_when_changed')
+    success_url = reverse_lazy('catalog:')
+    template_name = 'catalog/productedit_form.html'
+
+
+class HomepageListView(ListView):
+    model = Product
+    template_name = 'catalog/home_page.html'
 
 
 def show_contacts(request):
@@ -31,12 +39,29 @@ def show_contacts(request):
         to_html_dict['email'] = information.email
         to_html_dict['number'] = information.number
         to_html_dict['desc'] = information.description
-    return render(request, 'main/contacts.html', to_html_dict)
+    return render(request, 'catalog/contacts.html', to_html_dict)
 
 
-def show_product(request):
-    products = Product.objects.all()
-    categories = Category.objects.all()
-    to_html_dict = {'object_list': products,
-                    'categories': categories}
-    return render(request, 'main/product_card.html', to_html_dict)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
+
+
+# def show_home_page(request):
+#     products = Product.objects.all()
+#     categories = Category.objects.all()
+#     to_html_dict = {'object_list': products,
+#                     'categories': categories}
+#     # for index in range(len(products)):
+#     #     to_html_dict[f'product{index + 1}'] = products[index]
+#     #     to_html_dict[f'price{index + 1}'] = products[index].price
+#     #     to_html_dict[f'desc{index + 1}'] = products[index].description
+#     print(products)
+#     return render(request, 'catalog/home_page.html', to_html_dict)
+
+# def show_product(request):
+#     products = Product.objects.all()
+#     categories = Category.objects.all()
+#     to_html_dict = {'object_list': products,
+#                     'categories': categories}
+#     return render(request, 'catalog/product_detail.html', to_html_dict)
