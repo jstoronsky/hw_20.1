@@ -8,12 +8,9 @@
                 <div class="card-body text-black">
                     <form method="post">
                         {% csrf_token %}
-<!--                        <p>-->
-<!--    <label for="id_id">id</label>-->
-<!--    <input type="number" name="id" required id="id_id">-->
-<!--                        </p>-->
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-success">Редактировать</button>
+                        <h3>Вы точно хотите удалить статью?</h3>
+                        <button type="submit" class="btn btn-danger">Да</button>
+                        <a href="{% url 'blog:list'  %}" class="btn btn-primary">Отмена</a>
                     </form>
                 </div>
             </div>

@@ -16,7 +16,6 @@ class ProductUpdateView(UpdateView):
     model = Product
     fields = ('product_name', 'description', 'price', 'date_when_changed')
     success_url = reverse_lazy('catalog:')
-    template_name = 'catalog/productedit_form.html'
 
 
 class HomepageListView(ListView):

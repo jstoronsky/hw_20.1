@@ -8,15 +8,11 @@
                 <div class="card-body text-black">
                     <form method="post">
                         {% csrf_token %}
-<!--                        <p>-->
-<!--    <label for="id_id">id</label>-->
-<!--    <input type="number" name="id" required id="id_id">-->
-<!--                        </p>-->
                         {{ form.as_p }}
-                        {% if not object %}
-                        <button type="submit" class="btn btn-success">Создать</button>
-                        {% else %}
+                        {% if object %}
                         <button type="submit" class="btn btn-success">Редактировать</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-success">Создать</button>
                         {% endif %}
                     </form>
                 </div>
