@@ -36,6 +36,11 @@
 <!--          <a href="{% url 'catalog:product' product.pk %}"><button type="button" class="btn btn-sm">Детально</button></a>-->
           <a href="{% url 'catalog:update' product.pk %}"><button type="button" class="btn btn-sm">Редактировать</button></a>
           <a href="{% url 'catalog:delete' product.pk %}"><button type="button" class="btn btn-sm">Удалить</button></a>
+          {% for version in versions %}
+              {% if version.product == product %}
+          <p>Версия {{version.version_number}} ({{version.version_name}})</p>
+              {% endif %}
+          {% endfor %}
         </div>
       </div>
     </div>

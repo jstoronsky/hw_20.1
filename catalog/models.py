@@ -53,3 +53,20 @@ class Contacts(models.Model):
     class Meta:
         verbose_name = 'контакты'
         verbose_name_plural = 'контакты'
+
+
+class Version(models.Model):
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name='продукт')
+    version_number = models.FloatField(verbose_name='версия карточки продукта')
+    version_name = models.CharField(max_length=50, verbose_name='название версии')
+    is_active = models.BooleanField(default=False, verbose_name='активная ли версия?')
+
+    # def show_products(self):
+    #     return ", ".join([p.product_name for p in self.products.all()])
+
+    def __str__(self):
+        return f'Версия {self.version_number} ({self.version_name})'
+
+    class Meta:
+        verbose_name = 'версия товара'
+        verbose_name_plural = 'версии товаров'
