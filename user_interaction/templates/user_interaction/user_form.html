@@ -1,0 +1,24 @@
+{% extends 'catalog/base_sidebar.html' %}
+
+{% block content_2 %}
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body text-black">
+
+                        {% csrf_token %}
+                        <!--                        <p>-->
+                        <!--    <label for="id_id">id</label>-->
+                        <!--    <input type="number" name="id" required id="id_id">-->
+                        <!--                        </p>-->
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

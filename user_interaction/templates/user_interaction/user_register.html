@@ -1,7 +1,6 @@
 {% extends 'catalog/base_sidebar.html' %}
 
 {% block content_2 %}
-C
 <div class="container">
     <form method="post" enctype="multipart/form-data">
         <div class="row">
@@ -16,27 +15,14 @@ C
                         <!--                        </p>-->
                         {{ form.as_p }}
                         {% if not object %}
-                        <button type="submit" class="btn btn-success">Создать</button>
+                        <button type="submit" class="btn btn-success">Регистрация</button>
                         {% else %}
                         <button type="submit" class="btn btn-success">Редактировать</button>
                         {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body text-black">
-                        {{formset.management_form}}
-                        {% for form in formset.forms %}
-                            {{ form.as_p }}
-<!--                        <button type="submit" class="btn btn-danger">Удалить</button>-->
-                        <hr>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
         </div>
     </form>
 </div>
-{% endif %}
 {% endblock %}

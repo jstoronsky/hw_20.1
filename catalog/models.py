@@ -14,6 +14,7 @@ class Product(models.Model):
                                        verbose_name='дата добавления товара на сайт')
     date_when_changed = models.DateField(auto_now=False, auto_now_add=False,
                                          verbose_name='дата изменения информации по товару')
+    user = models.ForeignKey('user_interaction.CustomUser', on_delete=models.CASCADE, verbose_name='Пользователь')
 
     def __str__(self):
         return self.product_name

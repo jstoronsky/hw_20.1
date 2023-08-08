@@ -14,6 +14,10 @@ class ProductCreateView(CreateView):
     # fields = ('product_name', 'description', 'category', 'price', 'date_when_added', 'date_when_changed')
     success_url = reverse_lazy('catalog:')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class ProductUpdateView(UpdateView):
     model = Product
@@ -56,6 +60,7 @@ class HomepageListView(ListView):
                 version.save(update_fields=['is_active'])
         context_data['versions'] = Version.objects.filter(is_active=True)
         return context_data
+
 
 
 def show_contacts(request):

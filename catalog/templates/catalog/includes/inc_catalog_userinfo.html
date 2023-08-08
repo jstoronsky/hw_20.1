@@ -1,11 +1,19 @@
-      <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong>Пользователь</strong>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-          <li><a class="dropdown-item" href="#">Профиль</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Выход</a></li>
-        </ul>
-      </div>
+{% load my_tags %}
+<div class="dropdown">
+    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="{% mediapath user.avatar %}" alt="" width="32" height="32" class="rounded-circle me-2">
+        <strong>{{user.email}}</strong>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+        {% if user.is_authenticated %}
+        <li><a class="dropdown-item" href="{% url 'user_interaction:logout' %}">Выйти</a></li>
+        <li><a class="dropdown-item" href="{% url 'user_interaction:profile' %}">Профиль</a></li>
+        {% else %}
+        <li><a class="dropdown-item" href="{% url 'user_interaction:login' %}">Войти</a></li>
+        <li><a class="dropdown-item" href="{% url 'user_interaction:register' %}">Регистрация</a></li>
+        <li><a class="dropdown-item" href="{% url 'user_interaction:reset' %}">Сбросить пароль</a></li>
+        {% endif %}
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">!!!</a></li>
+    </ul>
+</div>
