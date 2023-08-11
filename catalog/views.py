@@ -1,4 +1,6 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
@@ -19,11 +21,13 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductEditForm
     # fields = ('product_name', 'description', 'price', 'date_when_changed')
     success_url = reverse_lazy('catalog:')
+    permission_required = ('catalog.set_is_active', 'catalog.change_product_description',
+                           'catalog.change_product_category')
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -41,6 +45,12 @@ class ProductUpdateView(UpdateView):
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
+    def get_object(self, queryset=None):
+        object_ = super().get_object(queryset)
+        if object_.user != self.request.user and not self.request.user.is_superuser:
+            raise Http404
+        return object_
 
 
 class HomepageListView(ListView):
@@ -61,6 +71,13 @@ class HomepageListView(ListView):
         context_data['versions'] = Version.objects.filter(is_active=True)
         return context_data
 
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     if self.request.user.is_superuser:
+    #         return queryset
+    #     elif self.request.user.is_authenticated:
+    #         queryset = queryset.filter(is_active=True, user=self.request.user)
+    #         return queryset
 
 
 def show_contacts(request):

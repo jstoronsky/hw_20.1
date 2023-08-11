@@ -10,6 +10,7 @@ class Product(models.Model):
     product_image = models.ImageField(upload_to='products/', verbose_name='изображение продукта', **NULLABLE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name='Категория')
     price = models.IntegerField(verbose_name='цена товара')
+    is_active = models.BooleanField(default=False, verbose_name='статус публикации')
     date_when_added = models.DateField(auto_now=False, auto_now_add=False,
                                        verbose_name='дата добавления товара на сайт')
     date_when_changed = models.DateField(auto_now=False, auto_now_add=False,
@@ -23,6 +24,9 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         ordering = ('id', )
+        permissions = [('set_is_active', 'Can cancel product card publication'),
+                       ('change_product_description', 'Change product description'),
+                       ('change_product_category', 'Change category of product')]
 
 
 class Category(models.Model):
