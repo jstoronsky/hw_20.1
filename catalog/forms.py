@@ -1,5 +1,4 @@
 from django import forms
-
 from catalog.models import Product, Version
 
 
@@ -38,8 +37,6 @@ class ProductEditForm(MixinStyle, forms.ModelForm):
     class Meta:
         model = Product
         fields = ('product_name', 'description', 'product_image', 'price', 'date_when_changed')
-        # fields = '__all__'
-        # exclude = ('product_image')
 
     def clean_product_name(self):
         cleaned_data = self.cleaned_data['product_name']
