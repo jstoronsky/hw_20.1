@@ -13,19 +13,24 @@
                         <!--    <label for="id_id">id</label>-->
                         <!--    <input type="number" name="id" required id="id_id">-->
                         <!--                        </p>-->
-                        {% if perms.catalog.change_product_category %}
-                        <p>Категория:</p>
-                            {{ form.category }}
-                        {% endif %}
-                        {% if perms.catalog.change_product_description %}
-                        <br>
-                        <p>Описание товара:</p>
-                          {{ form.description }}
-                        {% endif %}
-                        {% if perms.catalog.set_is_active %}
-                        <br>
-                        <p>Опубликовать? </p>
-                          {{ form.is_active }}
+                        {% if user.is_superuser %}
+                            {{ form.as_p }}
+                        {% else %}
+
+                            {% if perms.catalog.change_product_category %}
+                            <p>Категория:</p>
+                                {{ form.category }}
+                            {% endif %}
+                            {% if perms.catalog.change_product_description %}
+                            <br>
+                            <p>Описание товара:</p>
+                                {{ form.description }}
+                            {% endif %}
+                            {% if perms.catalog.set_is_active %}
+                            <br>
+                            <p>Опубликовать? </p>
+                                {{ form.is_active }}
+                            {% endif %}
                         {% endif %}
                         <br>
                         {% if not object %}

@@ -40,16 +40,16 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
-        self.object = form.save()
+        object_ = form.save()
         if formset.is_valid():
-            formset.instance = self.object
+            formset.instance = object_
             formset.save()
         return super().form_valid(form)
 
     def get_object(self, queryset=None):
         object_ = super().get_object(queryset)
         if object_.user != self.request.user and not self.request.user.is_superuser:
-            raise Http404
+            raise Http404('Вы не можете редактировать данный товар')
         return object_
 
 
