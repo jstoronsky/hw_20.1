@@ -36,7 +36,7 @@ class ProductAddForm(MixinStyle, forms.ModelForm):
 class ProductEditForm(MixinStyle, forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('product_name', 'description', 'product_image', 'price', 'date_when_changed')
+        fields = ('product_name', 'description', 'category', 'product_image', 'price', 'date_when_changed', 'is_active')
 
     def clean_product_name(self):
         cleaned_data = self.cleaned_data['product_name']
