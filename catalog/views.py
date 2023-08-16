@@ -8,6 +8,8 @@ from catalog.forms import ProductAddForm, ProductEditForm, VersionCreateForm
 from catalog.models import Product, Contacts, Category, Version
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 
+from catalog.service import cached_categories
+
 
 # Create your views here.
 class ProductCreateView(CreateView):
@@ -58,8 +60,9 @@ class HomepageListView(ListView):
     template_name = 'catalog/home_page.html'
 
     def get_context_data(self, **kwargs):
-        context_data = super(HomepageListView, self).get_context_data(**kwargs)
-        products = [product.id for product in Product.objects.all()]
+        context_data = super().get_context_data(**kwargs)
+        all_products = Product.objects.all()
+        products = [product.id for product in all_products]
         for product in products:
             for version in Version.objects.filter(product=product):
                 max_version = max([vers.version_number for vers in Version.objects.filter(product=product)])
@@ -69,15 +72,12 @@ class HomepageListView(ListView):
                     version.is_active = False
                 version.save(update_fields=['is_active'])
         context_data['versions'] = Version.objects.filter(is_active=True)
+        context_data['categories'] = cached_categories
         return context_data
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     if self.request.user.is_superuser:
-    #         return queryset
-    #     elif self.request.user.is_authenticated:
-    #         queryset = queryset.filter(is_active=True, user=self.request.user)
-    #         return queryset
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(is_active=True)
 
 
 def show_contacts(request):
@@ -87,8 +87,9 @@ def show_contacts(request):
         get_message = request.POST.get('message')
         print(f'Имя: {get_name}, email: {get_email}\n Сообщение: {get_message}')
     company = Contacts.objects.all()
-    categories = Category.objects.all()
-    to_html_dict = {'categories': categories}
+
+    products = Product.objects.all()
+    to_html_dict = {'categories': cached_categories(), 'object_list': products}
     for information in company:
         to_html_dict['company_name'] = information
         to_html_dict['address'] = information.address
@@ -98,9 +99,23 @@ def show_contacts(request):
     return render(request, 'catalog/contacts.html', to_html_dict)
 
 
+# def edit_base_template(request):
+#     categories = Category.objects.all()
+#     products = Product.objects.all()
+#     to_html_dict = {'categories': categories, 'products': products}
+#     return render(request, 'catalog/base_sidebar', to_html_dict)
+
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        products = Product.objects.all()
+        context_data['object_list'] = products
+        context_data['categories'] = cached_categories()
+        return context_data
 
 
 class ProductDeleteView(DeleteView):
