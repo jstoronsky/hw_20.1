@@ -149,29 +149,15 @@
         </button>
         <div class="collapse show" id="home-collapse">
           <p></p>
-          <h6><small>Напитки</small></h6>
-          {% for object in object_list %}
-              {% if object.category.pk == 1 %}
+          {% for category in categories %}
+          <h6><small>{{category}}</small></h6>
+              {% for product in object_list %}
+                  {% if product.category.pk == category.pk %}
           <div>
-            <a href="{% url 'catalog:product' object.pk %}"><p><small>{{object}}</small></p></a>
+            <a href="{% url 'catalog:product' product.pk %}"><p><small>{{product}}</small></p></a>
           </div>
-              {% endif %}
-          {% endfor %}
-          <h6><small>Фрукты и овощи</small></h6>
-          {% for object in object_list %}
-              {% if object.category.pk == 2 %}
-          <div>
-            <a href="{% url 'catalog:product' object.pk %}"><p><small>{{object}}</small></p></a>
-          </div>
-              {% endif %}
-          {% endfor %}
-          <h6><small>Орехи и сухофрукты</small></h6>
-          {% for object in object_list %}
-              {% if object.category.pk == 3 %}
-          <div>
-            <a href="{% url 'catalog:product' object.pk %}"><p><small>{{object}}</small></p></a>
-          </div>
-              {% endif %}
+                  {% endif %}
+              {% endfor %}
           {% endfor %}
         </div>
 
